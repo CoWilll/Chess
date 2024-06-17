@@ -24,6 +24,18 @@ public abstract class Piece {
 	//If the piece has left the game then the boolean value will be true.
 	private boolean hasLeftGame;
 	
+	//A letter to represent the piece on the console board.
+	private char letterRepresentation;
+	
+	/**
+	 * Constructor that will take in the location, color and letter.
+	 */
+	public Piece (Point location, Color color, char letterRepresentation) {
+		this.location = location;
+		this.color = color;
+		this.letterRepresentation = letterRepresentation;
+	}
+	
 	/**
 	 * Method will (based on the type of piece) see whether the movement is 
 	 * allowed for what every type of piece is being used. This abstract method
@@ -36,6 +48,10 @@ public abstract class Piece {
 	 * a King moving only one space or a Rook moving horizontally and vertically.
 	 */
 	abstract boolean validateMovementPattern(Point newlocation);
+
+	public char getLetterRepresentation() {
+		return letterRepresentation;
+	}
 	
 	
 	
