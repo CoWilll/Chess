@@ -3,6 +3,8 @@ package pieces;
 import java.awt.Color;
 import java.awt.Point;
 
+import backend.Data;
+
 /**
  * Abstract class that will represent a piece and serve as a 
  * superclass to all the chess pieces (Rook, Knight, Bishep, King,
@@ -16,16 +18,16 @@ import java.awt.Point;
 public abstract class Piece {
 	
 	//In location x will represent the rows and Y will represent the columns.
-	private Point location;
+	protected Point location;
 	
 	//Colors of pieces can either be white or black.
-	private Color color;
+	protected Color color;
 	
 	//If the piece has left the game then the boolean value will be true.
-	private boolean hasLeftGame;
+	protected boolean hasLeftGame;
 	
 	//A letter to represent the piece on the console board.
-	private char letterRepresentation;
+	protected char letterRepresentation;
 	
 	/**
 	 * Constructor that will take in the location, color and letter.
@@ -47,7 +49,7 @@ public abstract class Piece {
 	 * @return true if the movement is allowed for the particular piece such as
 	 * a King moving only one space or a Rook moving horizontally and vertically.
 	 */
-	abstract boolean validateMovementPattern(Point newlocation);
+	public abstract boolean validateMovementPattern(Point newlocation, Data data);
 
 	public char getLetterRepresentation() {
 		return letterRepresentation;

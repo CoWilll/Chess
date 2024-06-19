@@ -3,6 +3,8 @@ package pieces;
 import java.awt.Color;
 import java.awt.Point;
 
+import backend.Data;
+
 public class Queen extends Piece{
 
 	public Queen(Point location, Color color, char letterRepresentation) {
@@ -11,7 +13,7 @@ public class Queen extends Piece{
 	}
 
 	@Override
-	boolean validateMovementPattern(Point newlocation) {
+	public boolean validateMovementPattern(Point newlocation, Data data) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -1,7 +1,10 @@
 package Main;
 
+import java.awt.Point;
+
 import backend.Data;
 import io.BoardConsole;
+import io.IO;
 
 /**
  * The starting class that initiates the chess game
@@ -21,7 +24,16 @@ public class Main {
 		
 		//TESTING
 		BoardConsole.printBoard(data);
+		
+		System.out.println("Please enter your new spot.");
+		int x = IO.getInt("Please enter x:");
+		int y = IO.getInt("Please enter y:");
+		
+		System.out.println(data.getBoard()[0][0].validateMovementPattern(new Point(x,y), data));
+		
+		
 		//TESTING
+		
 	}
 
 }

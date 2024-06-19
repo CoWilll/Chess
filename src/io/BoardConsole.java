@@ -16,7 +16,7 @@ public class BoardConsole {
 	private static int length = 8;
 	
 	public static void printBoard(Data data) {
-		char element = ' ';
+		String element = " ";
 		StringBuilder sb = new StringBuilder();
 		
 		for (int j = 0; j < length; j++) {
@@ -27,18 +27,20 @@ public class BoardConsole {
 		
 		System.out.print("\n" + sb.toString() + "\n\n");
 		//For loop to print all the rows.
-		for (int i = 0; i < length; i++) {
-			for (int j = 0; j < length; j++) {
+		for (int x = 0; x < length; x++) {
+			for (int y = 0; y < length; y++) {
+				
 				//Check to see if piece is in spot
-				if (data.getBoard()[i][j] != null) {
-					element = data.getBoard()[i][j].getLetterRepresentation();
-				} else {
-					element = ' ';
+//				if (data.getBoard()[x][y] != null) {
+//					element = data.getBoard()[x][y].getLetterRepresentation() + "";
+//				} else 
+				{
+					element = String.format("(%d,%d)", x,y);
 				}
-					
 				
 				System.out.printf("| %s ", element);
 			}
+			
 			System.out.print("|\n" + sb.toString() + "\n\n");
 			
 		}

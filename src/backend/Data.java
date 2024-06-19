@@ -15,6 +15,7 @@ import pieces.Rook;
  */
 public class Data {
 	private int length = 8;
+	private boolean kingInCheck;
 	private Piece[][] board = new Piece[length][length];
 	
 	public Data() {
@@ -25,13 +26,21 @@ public class Data {
 					board[i][j] = new Rook(new Point(i,j), Color.white, 'R');
 				}
 				
+				//TESTING ROOK CODE - DELETE ME.....
+				if (i == 0 && j == 6) {
+					board[i][j] = new Rook(new Point(i,j), Color.white, 'R');
+				}
+				//TESTING ROOK CODE - DELETE ME.....
 			}
-			
 		}
 	}
 
 	public Piece[][] getBoard() {
 		return board;
+	}
+	
+	public boolean getKingInCheck() {
+		return kingInCheck;
 	}
 	
 	
