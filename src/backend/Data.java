@@ -2,9 +2,7 @@ package backend;
 
 import java.awt.Color;
 import java.awt.Point;
-
-import pieces.Piece;
-import pieces.Rook;
+import pieces.*;
 
 /**
  * 
@@ -18,19 +16,35 @@ public class Data {
 	private boolean kingInCheck;
 	private Piece[][] board = new Piece[length][length];
 	
+	/**
+	 * Constructor will create a two dimensional array will all the chess pieces
+	 * in their proper starting location.
+	 */
 	public Data() {
+		//Loop through whole board setting up pieces.
 		for (int i = 0; i < length; i++) {
 			for (int j = 0; j < length; j++) {
-				//Setting up rooks - initial position
-				if((i == 0 || i == 7) && (j == 0 || j == 7)){
-					board[i][j] = new Rook(new Point(i,j), Color.white, 'R');
+				
+				//Setting up rooks - White
+				if (i == 0) {
+					if (j == 0 || j == 7) {
+						board[i][j] = new Rook(new Point(i,j), Color.white, 'R');
+					}
+				//Setting up rooks - Black
+				} else if (i == 7) {
+					if (j == 0 || j == 7) {
+						board[i][j] = new Rook(new Point(i,j), Color.black, 'R');
+					}
 				}
 				
-				//TESTING ROOK CODE - DELETE ME.....
-				if (i == 2 && j == 0) {
-					board[i][j] = new Rook(new Point(i,j), Color.white, 'R');
-				}
-				//TESTING ROOK CODE - DELETE ME.....
+				//Setting up pawn - White 
+				if (i == 1) {
+					board[i][j] = new Pawn(new Point(i,j), Color.white, 'P');	
+				
+				//Setting up pawn - Black
+				} else  if (i == 6)
+					board[i][j] = new Pawn(new Point(i,j), Color.black, 'P');	
+				
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 package io;
 
+import java.awt.Color;
+
 import backend.Data;
 
 /**
@@ -33,6 +35,11 @@ public class BoardConsole {
 				//Check to see if piece is in spot
 				if (data.getBoard()[x][y] != null) {
 					element = data.getBoard()[x][y].getLetterRepresentation() + "";
+					if (data.getBoard()[x][y].getColor() == Color.white)
+						element = String.format("w=%s=w", element);
+					else
+						element = String.format("b=%s=b", element);
+						
 				} else 
 				{
 					element = String.format("(%d,%d)", x,y);

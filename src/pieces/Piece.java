@@ -55,6 +55,10 @@ public abstract class Piece {
 		return letterRepresentation;
 	}
 	
+	public Color getColor() {
+		return color;
+	}
+	
 	
 	
 }
