@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.awt.Point;
 
@@ -7,8 +7,8 @@ import io.BoardConsole;
 import io.IO;
 
 /**
- * The starting class that initiates the chess game
- * via the <code>main</code> method.
+ * The starting class that initiates the chess game via the <code>main</code>
+ * method.
  * 
  * @author Collin Williams
  */
@@ -21,19 +21,22 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Data data = new Data();
-		
-		//TESTING
+
+		// TESTING
 		BoardConsole.printBoard(data);
-		
+
 		System.out.println("Please enter your new spot.");
 		int x = IO.getInt("Please enter x:");
 		int y = IO.getInt("Please enter y:");
-		
-		System.out.println(data.getBoard()[0][0].validateMovementPattern(new Point(x,y), data));
-		
-		
-		//TESTING
-		
+
+		boolean valid = data.getBoard()[0][0].validateMovementPattern(new Point(x, y), data);
+		if (valid) {
+			data.getBoard()[x][y] = data.getBoard()[0][0];
+			data.getBoard()[0][0] = null;
+		}
+		BoardConsole.printBoard(data);
+		// TESTING
+
 	}
 
 }

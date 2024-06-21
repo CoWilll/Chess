@@ -30,107 +30,83 @@ public class Rook extends Piece {
 	 * Rook Piece Moves horizontally or vertically. Method will verify that
 	 * there are not pieces in the way and that movement is indeed
 	 * horizontal or vertical.
-	 * --------------------------------------------------------
+	 *---------------------------------------------------------
 	 *TODO: IF KING IS IN CHECK NEED TO VERIFY ROOK IS EITHER
 	 *PROTECTING KING OR SHOULDN"T MOVE.
+	 *DOESN'T TAKE INTO ACCOUNT PLAYER 1 OR PLAYER TWO PIECES.
+	 *CAN'T JUMP OWN PIECES.
+	 *DOES NOT CHECK IF PIECE IS OUT OF BOUNDS...
 	 *---------------------------------------------------------
 	 */
 	@Override
 	public boolean validateMovementPattern(Point newLocation, Data data) {
-		boolean pieceInWay = false;
 		boolean sameX = newLocation.x == location.x;
 		boolean sameY = newLocation.y == location.y;
+		boolean pieceInWay = pieceInWay(sameX, newLocation, data);
 		
-		//if the new position is same as old - not a valid move.
-		if (sameX && sameY)
+		/*
+		 * If the new position is same as old or
+		 * the movements is both horizontal and vertical
+		 * (meaning both sameX and sameY are false)
+		 * return false for not valid movement.
+		 */
+		if (sameX == sameY)
 			return false;
+
+		// if  horizontal or vertical movement return if there true is not piece in way.
+		return !pieceInWay;
 		
-		//Checking to see if their is a piece in the way
-		//Does new location have same row?
-		if (sameX) {
-			//Piece moving up?
-			if (newLocation.y < location.y) {
-				
-				//Start at beginning location and check every spot to new location exclusive.
-				//Note*: Starts at original location minus 1 to avoid checking itself.
-				for (int i = location.y-1; i > newLocation.y; i--) {
-					
-					//If a piece exist between the new and old Y the rook cannot make valid move.
-					if (data.getBoard()[location.x][i] != null) {
-						pieceInWay = true;
-						break;
-					}
-				}
-				
-				
-			//Piece moving down? - newLocation.y > location.y
-			} else {
-				
-				//Start at beginning location and check every spot to new location exclusive.
-				//Note*: Starts at original location plus 1 to avoid checking itself.
-				for (int i = location.y+1; i < newLocation.y; i++) {
-					
-					//If a piece exist between the new and old Y the rook cannot make valid move.
-					if (data.getBoard()[location.x][i] != null) {
-						pieceInWay = true;
-						break;
-					}
-				}
-				
-			}
+	}
+	
+	
+	/**
+	 * 
+	 * Method will return true if there is a piece in the way otherwise it will return false.
+	 * 
+	 * @param xIsSame
+	 * @param newLocation - Always Original location +/- 1 depending on ending cord.
+	 * @param oldLocation
+	 * @return
+	 */
+	private boolean pieceInWay (boolean xIsSame, Point newLocation, Data data) {
 		
-		//Does new location have same column? sameY?
-		} else {
-			//Piece moving up?
-			if (newLocation.x < location.x) {
-				
-				//Start at beginning location and check every spot to new location exclusive.
-				//Note*: Starts at original location minus 1 to avoid checking itself.
-				for (int i = location.x-1; i > newLocation.x; i--) {
-					
-					//If a piece exist between the new and old X the rook cannot make valid move.
-					if (data.getBoard()[i][location.y] != null) {
-						pieceInWay = true;
-						break;
-					}
-				}
-				
-				
-			//Piece moving down? - newLocation.x > location.x
-			} else {
-				
-				//Start at beginning location and check every spot to new location exclusive.
-				//Note*: Starts at original location plus 1 to avoid checking itself.
-				for (int i = location.x+1; i < newLocation.x; i++) {
-					
-					//If a piece exist between the new and old X the rook cannot make valid move.
-					if (data.getBoard()[i][location.y] != null) {
-						pieceInWay = true;
-						break;
-					}
-					
-					
-				}
-			}
+		// New and old numbers decide whether to use 
+		int newNum = (xIsSame ? newLocation.y : newLocation.x);
+		int oldNum = (xIsSame ? location.y : location.x);
+		
+		//Variable to hold whether the new location is larger - will be true if larger.
+		boolean newLocationLarger = newNum > oldNum;
+		
+		
+		/*
+		 * === i is initialized by condition below===
+		 * if new number is larger than old number:
+		 * 		Start searching at old location + 1.
+		 * else if new number is smaller:
+		 * 		Start searching at old location - 1.
+		 *(The conditions above are to avoid checking itself)
+		 * 
+		 * ===Loop ending condition below===
+		 * if new number is larger than old number:
+		 * 		compare to ensure i < new number
+		 * else if new number is smaller:
+		 * 		compare to ensure i > new number
+		 * (This is done because i will either increment or decrement)
+		 */
+		for (int i = (newLocationLarger ? oldNum + 1 : oldNum - 1); 
+		             (newLocationLarger ? i < newNum : i > newNum ); 
+		         i = (newLocationLarger ? i + 1      : i - 1)) {
+			
+			//If x is same keep x coord else keep y coord.
+			Piece pieceToCompare = (xIsSame ? 
+					data.getBoard()[location.x][i] : 
+					data.getBoard()[i][location.y]);
+			
+			//If the piece is not null meaning there is a piece there
+			//then return true because piece is no the way.
+			if (pieceToCompare != null) return true;
+			
 		}
-		
-		
-
-		// if  horizontal movement
-		if (sameX && !sameY) { 
-			
-			//if there is not a piece in the way.
-			return !pieceInWay;
-
-			// if  vertical movement
-		} else if (sameY && !sameX) {
-			
-			//If there is not a piece in the way.
-			return !pieceInWay;
-		
-		} 
-		
 		return false;
 	}
-
 }

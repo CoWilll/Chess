@@ -27,7 +27,7 @@ public class Data {
 				}
 				
 				//TESTING ROOK CODE - DELETE ME.....
-				if (i == 0 && j == 6) {
+				if (i == 2 && j == 0) {
 					board[i][j] = new Rook(new Point(i,j), Color.white, 'R');
 				}
 				//TESTING ROOK CODE - DELETE ME.....

@@ -31,9 +31,9 @@ public class BoardConsole {
 			for (int y = 0; y < length; y++) {
 				
 				//Check to see if piece is in spot
-//				if (data.getBoard()[x][y] != null) {
-//					element = data.getBoard()[x][y].getLetterRepresentation() + "";
-//				} else 
+				if (data.getBoard()[x][y] != null) {
+					element = data.getBoard()[x][y].getLetterRepresentation() + "";
+				} else 
 				{
 					element = String.format("(%d,%d)", x,y);
 				}
