@@ -36,6 +36,8 @@ public class Main {
 		}
 		BoardConsole.printBoard(data);
 		// TESTING
+		
+		System.out.println("Testing is done.");
 
 	}
 
