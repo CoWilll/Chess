@@ -22,8 +22,8 @@ public class Rook extends Piece {
 	 * @param color                - Color of the Piece
 	 * @param letterRepresentation - A letter that represents the piece
 	 */
-	public Rook(Point location, Color color, char letterRepresentation) {
-		super(location, color, letterRepresentation);
+	public Rook(Point location, Color color, char letterRepresentation, Data boardData) {
+		super(location, color, letterRepresentation, boardData);
 	}
 
 	/**
@@ -39,10 +39,15 @@ public class Rook extends Piece {
 	 *---------------------------------------------------------
 	 */
 	@Override
-	public boolean validateMovementPattern(Point newLocation, Data data) {
-		boolean sameX = newLocation.x == location.x;
-		boolean sameY = newLocation.y == location.y;
-		boolean pieceInWay = pieceInWay(sameX, newLocation, data);
+	public boolean validateMovementPattern(Point newLocation) {
+//		boolean sameX = newLocation.x == oldLocation.x;
+//		boolean sameY = newLocation.y == oldLocation.y;
+		boolean pieceInWay = pieceInWayVertical(oldLocation.x, newLocation.x);
+		
+//		if (sameX == sameY)
+//			return false;
+//
+//		return !pieceInWay;
 		
 		/*
 		 * If the new position is same as old or
@@ -50,12 +55,9 @@ public class Rook extends Piece {
 		 * (meaning both sameX and sameY are false)
 		 * return false for not valid movement.
 		 */
-		if (sameX == sameY)
-			return false;
-
-		// if  horizontal or vertical movement return if there true is not piece in way.
+//		// if  horizontal or vertical movement return if there true is not piece in way.
+//		return (sameX != sameY && !pieceInWay);
 		return !pieceInWay;
-		
 	}
 	
 	
@@ -68,14 +70,14 @@ public class Rook extends Piece {
 	 * @param oldLocation
 	 * @return
 	 */
-	private boolean pieceInWay (boolean xIsSame, Point newLocation, Data data) {
+	private boolean pieceInWay (boolean xIsSame, Point newLocation, Data boardData) {
 		
-		// New and old numbers decide whether to use 
-		int newNum = (xIsSame ? newLocation.y : newLocation.x);
-		int oldNum = (xIsSame ? location.y : location.x);
+		// New and old numbers decide whether to use (y or x axis).
+		int newCoord = (xIsSame ? newLocation.y : newLocation.x);
+		int oldCoord = (xIsSame ? oldLocation.y : oldLocation.x);
 		
 		//Variable to hold whether the new location is larger - will be true if larger.
-		boolean newLocationLarger = newNum > oldNum;
+		boolean newLocationLarger = newCoord > oldCoord;
 		
 		
 		/*
@@ -93,20 +95,21 @@ public class Rook extends Piece {
 		 * 		compare to ensure i > new number
 		 * (This is done because i will either increment or decrement)
 		 */
-		for (int i = (newLocationLarger ? oldNum + 1 : oldNum - 1); 
-		             (newLocationLarger ? i < newNum : i > newNum ); 
-		         i = (newLocationLarger ? i + 1      : i - 1)) {
+		for (int i = (newLocationLarger ? oldCoord + 1 : oldCoord - 1 ); 
+		             (newLocationLarger ? i < newCoord : i > newCoord ); 
+		         i = (newLocationLarger ? i + 1        : i - 1        )) {
 			
 			//If x is same keep x coord else keep y coord.
 			Piece pieceToCompare = (xIsSame ? 
-					data.getBoard()[location.x][i] : 
-					data.getBoard()[i][location.y]);
+					boardData.getBoard()[oldLocation.x][i] : 
+					boardData.getBoard()[i][oldLocation.y]);
 			
 			//If the piece is not null meaning there is a piece there
 			//then return true because piece is no the way.
 			if (pieceToCompare != null) return true;
 			
 		}
+		
 		return false;
 	}
 }

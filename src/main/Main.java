@@ -22,23 +22,23 @@ public class Main {
 	public static void main(String[] args) {
 		Data data = new Data();
 
-		// TESTING
-		BoardConsole.printBoard(data);
+		while (true) {
+			// TESTING
+			BoardConsole.printBoard(data);
 
-		System.out.println("Please enter your new spot.");
-		int x = IO.getInt("Please enter x:");
-		int y = IO.getInt("Please enter y:");
+			System.out.println("Please enter your new spot.");
+			int x = IO.getInt("Please enter x:");
+			int y = IO.getInt("Please enter y:");
 
-		boolean valid = data.getBoard()[0][0].validateMovementPattern(new Point(x, y), data);
-		if (valid) {
-			data.getBoard()[x][y] = data.getBoard()[0][0];
-			data.getBoard()[0][0] = null;
+			boolean valid = data.getBoard()[0][0].validateMovementPattern(new Point(x, y));
+			if (valid) {
+				data.getBoard()[x][y] = data.getBoard()[0][0];
+				data.getBoard()[0][0] = null;
+			}
+			BoardConsole.printBoard(data);
+			// TESTING
+
 		}
-		BoardConsole.printBoard(data);
-		// TESTING
-		
-		System.out.println("Testing is done.");
-
 	}
 
 }

@@ -28,22 +28,23 @@ public class Data {
 				//Setting up rooks - White
 				if (i == 0) {
 					if (j == 0 || j == 7) {
-						board[i][j] = new Rook(new Point(i,j), Color.white, 'R');
+						board[i][j] = new Rook(new Point(i,j), Color.white, 'R', this);
 					}
 				//Setting up rooks - Black
 				} else if (i == 7) {
 					if (j == 0 || j == 7) {
-						board[i][j] = new Rook(new Point(i,j), Color.black, 'R');
+						board[i][j] = new Rook(new Point(i,j), Color.black, 'R', this);
 					}
 				}
 				
-				//Setting up pawn - White 
-				if (i == 1) {
-					board[i][j] = new Pawn(new Point(i,j), Color.white, 'P');	
-				
-				//Setting up pawn - Black
-				} else  if (i == 6)
-					board[i][j] = new Pawn(new Point(i,j), Color.black, 'P');	
+//				//Setting up pawn - White 
+//				if (i == 1) {
+//					board[i][j] = new Pawn(new Point(i,j), Color.white, 'P', this);	
+//				
+//				//Setting up pawn - Black
+//				} else  
+					if (i == 6)
+					board[i][j] = new Pawn(new Point(i,j), Color.black, 'P', this);	
 				
 			}
 		}
