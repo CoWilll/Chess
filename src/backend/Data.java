@@ -27,7 +27,7 @@ public class Data {
 				
 				//Setting up rooks - White
 				if (i == 0) {
-					if (j == 0 || j == 7) {
+					if (j == 1 || j == 7) {
 						board[i][j] = new Rook(new Point(i,j), Color.white, 'R', this);
 					}
 				//Setting up rooks - Black

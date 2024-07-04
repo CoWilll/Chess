@@ -55,6 +55,10 @@ public abstract class Piece {
 	 *         vertically.
 	 */
 	public abstract boolean validateMovementPattern(Point newlocation);
+	
+	public void updateMove(Point newCoords) {
+		oldLocation = newCoords;
+	}
 
 	public char getLetterRepresentation() {
 		return letterRepresentation;
@@ -104,24 +108,37 @@ public abstract class Piece {
 		return pieceInWay;
 	}
 
-	protected boolean pieceInWayHorizontal() {
-		return false;
-	}
+	protected boolean pieceInWayHorizontal(int yCoordOld, int yCoordNew) {
 
-	protected boolean pieceInWayOneAnyDirection() {
-		return false;
+		boolean newYRightOfOriginal = yCoordNew > yCoordOld;
+		boolean pieceInWay = false;
+		
+		//Modify xCoordOld by +1/-1 to avoid checking itself.
+		yCoordOld = newYRightOfOriginal ? yCoordOld + 1 : yCoordOld - 1;
+		
+		if (newYRightOfOriginal) {
+			for (int i = yCoordOld; i < yCoordNew; i++) {
+				
+				Piece pieceToCompare = boardData.getBoard()[oldLocation.x][i];
+				
+				if (pieceToCompare != null) {
+					pieceInWay = true;
+					break;
+				}
+			}
+		} else {
+			for (int i = yCoordOld; i > yCoordNew; i--) {
+				
+				Piece pieceToCompare = boardData.getBoard()[oldLocation.x][i];
+				
+				if (pieceToCompare != null) {
+					pieceInWay = true;
+					break;
+				}
+			}
+		}
+		
+		return pieceInWay;
 	}
-
-	protected boolean pieceInWayOneFoward() {
-		return false;
-	}
-
-//	protected boolean pieceInWayDiagonalLeft() {
-//		return false;
-//	}
-//	
-//	protected boolean pieceInWayDiagonalLeft() {
-//		return false;
-//	}
 
 }

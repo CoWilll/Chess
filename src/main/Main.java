@@ -22,23 +22,33 @@ public class Main {
 	public static void main(String[] args) {
 		Data data = new Data();
 
+		// TESTING
 		while (true) {
-			// TESTING
 			BoardConsole.printBoard(data);
+			System.out.println("Please enter spot to move.");
+			int oldX = IO.getInt("Please enter x:");
+			int oldY = IO.getInt("Please enter y:");
 
 			System.out.println("Please enter your new spot.");
-			int x = IO.getInt("Please enter x:");
-			int y = IO.getInt("Please enter y:");
+			int newX = IO.getInt("Please enter x:");
+			int newY = IO.getInt("Please enter y:");
 
-			boolean valid = data.getBoard()[0][0].validateMovementPattern(new Point(x, y));
-			if (valid) {
-				data.getBoard()[x][y] = data.getBoard()[0][0];
-				data.getBoard()[0][0] = null;
+			if (data.getBoard()[oldX][oldY] != null) {
+				boolean valid = data.getBoard()[oldX][oldY].validateMovementPattern(new Point(newX, newY));
+				
+				if (valid) {
+					//Fill new spot with piece from old spot.
+					data.getBoard()[newX][newY] = data.getBoard()[oldX][oldY];
+					//Nulify the old spot
+					data.getBoard()[oldX][oldY] = null;
+					
+					//Update the back-end data for piece.
+					data.getBoard()[newX][newY].updateMove(new Point(newX,newY));
+				}
+			
 			}
-			BoardConsole.printBoard(data);
-			// TESTING
-
 		}
+		// TESTING
 	}
 
 }
