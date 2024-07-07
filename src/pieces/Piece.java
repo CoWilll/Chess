@@ -15,6 +15,12 @@ import backend.Data;
  * @author Collin Williams
  */
 public abstract class Piece {
+	
+	// Will only have player one and player two.
+	protected int player;
+	
+	// If the piece has been moved since the game started.
+	protected boolean firstMovedUsed;
 
 	// Every piece will have access to see the board.
 	protected Data boardData;
@@ -34,12 +40,12 @@ public abstract class Piece {
 	/**
 	 * Constructor that will take in the location, color and letter.
 	 */
-	public Piece(Point location, Color color, char letterRepresentation, Data boardData) {
+	public Piece(Point location, Color color, char letterRepresentation, Data boardData, int player) {
 		this.oldLocation = location;
 		this.color = color;
 		this.letterRepresentation = letterRepresentation;
 		this.boardData = boardData;
-
+		this.player = player;
 	}
 
 	/**
@@ -70,18 +76,24 @@ public abstract class Piece {
 
 	/**
 	 * Methods will determine if there is a piece in the way vertically.
+	 * 
 	 * This method excludes the original spot the piece is in 
-	 * and the last spot it will check because of jumping possi
+	 * and will only check the last spot if <code>lastSpotInclusive</code>
+	 * is true.
 	 * 
 	 * @return True is there is a piece in the way vertically.
 	 */
-	protected boolean pieceInWayVertical(int xCoordOld, int xCoordNew) {
+	protected boolean pieceInWayVertical(int xCoordOld, int xCoordNew, boolean lastSpotInclusive) {
 
 		boolean newXBelowOriginal = xCoordNew > xCoordOld;
 		boolean pieceInWay = false;
 		
 		//Modify xCoordOld by +1/-1 to avoid checking itself.
 		xCoordOld = newXBelowOriginal ? xCoordOld + 1 : xCoordOld - 1;
+		
+		if (lastSpotInclusive)
+			xCoordNew++;
+		
 		
 		if (newXBelowOriginal) {
 			for (int i = xCoordOld; i < xCoordNew; i++) {
@@ -108,13 +120,23 @@ public abstract class Piece {
 		return pieceInWay;
 	}
 
-	protected boolean pieceInWayHorizontal(int yCoordOld, int yCoordNew) {
+	/**
+	 * 
+	 * @param yCoordOld
+	 * @param yCoordNew
+	 * @param lastSpotInclusive
+	 * @return
+	 */
+	protected boolean pieceInWayHorizontal(int yCoordOld, int yCoordNew, boolean lastSpotInclusive) {
 
 		boolean newYRightOfOriginal = yCoordNew > yCoordOld;
 		boolean pieceInWay = false;
 		
 		//Modify xCoordOld by +1/-1 to avoid checking itself.
 		yCoordOld = newYRightOfOriginal ? yCoordOld + 1 : yCoordOld - 1;
+		
+		//If last spot is to be included increase the new y coord by one.
+		if (lastSpotInclusive) yCoordNew++;
 		
 		if (newYRightOfOriginal) {
 			for (int i = yCoordOld; i < yCoordNew; i++) {

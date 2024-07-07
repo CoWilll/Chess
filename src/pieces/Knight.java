@@ -7,8 +7,8 @@ import backend.Data;
 
 public class Knight extends Piece {
 
-	public Knight(Point location, Color color, char letterRepresentation, Data boardData) {
-		super(location, color, letterRepresentation, boardData);
+	public Knight(Point location, Color color, char letterRepresentation, Data boardData, int player) {
+		super(location, color, letterRepresentation, boardData, player);
 		// TODO Auto-generated constructor stub
 	}
 

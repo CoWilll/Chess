@@ -22,8 +22,8 @@ public class Rook extends Piece {
 	 * @param color                - Color of the Piece
 	 * @param letterRepresentation - A letter that represents the piece
 	 */
-	public Rook(Point location, Color color, char letterRepresentation, Data boardData) {
-		super(location, color, letterRepresentation, boardData);
+	public Rook(Point location, Color color, char letterRepresentation, Data boardData, int player) {
+		super(location, color, letterRepresentation, boardData, player);
 	}
 
 	/**
@@ -49,11 +49,11 @@ public class Rook extends Piece {
 		
 		//Moving Horizontally
 		if (sameX && !sameY) {
-			pieceInWay = pieceInWayHorizontal(oldLocation.y,newLocation.y);
+			pieceInWay = pieceInWayHorizontal(oldLocation.y,newLocation.y, false);
 			
 		//Moving Vertically
 		} else if (!sameX && sameY) {
-			pieceInWay = pieceInWayVertical(oldLocation.x, newLocation.x);
+			pieceInWay = pieceInWayVertical(oldLocation.x, newLocation.x, false);
 		}
 		
 		return !pieceInWay;

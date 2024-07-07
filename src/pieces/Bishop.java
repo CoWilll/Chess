@@ -7,8 +7,8 @@ import backend.Data;
 
 public class Bishop extends Piece{
 
-	public Bishop(Point location, Color color, char letterRepresentation, Data boardData) {
-		super(location, color, letterRepresentation, boardData);
+	public Bishop(Point location, Color color, char letterRepresentation, Data boardData, int player) {
+		super(location, color, letterRepresentation, boardData, player);
 		// TODO Auto-generated constructor stub
 	}
 
