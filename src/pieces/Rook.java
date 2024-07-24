@@ -42,19 +42,22 @@ public class Rook extends Piece {
 	public boolean validateMovementPattern(Point newLocation) {
 		
 		boolean pieceInWay = false;
+		boolean validMovementPattern = false;
 		boolean sameRow = newLocation.getRow() == oldLocation.getRow();
 		boolean sameColumn = newLocation.getColumn() == oldLocation.getColumn();
 		
 		//Moving Horizontally
 		if (sameRow && !sameColumn) {
+			validMovementPattern = true;
 			pieceInWay = pieceInWayHorizontal(oldLocation.getColumn(),newLocation.getColumn(), false);
 			
 		//Moving Vertically
 		} else if (!sameRow && sameColumn) {
+			validMovementPattern = true;
 			pieceInWay = pieceInWayVertical(oldLocation.getRow(), newLocation.getRow(), false);
 		}
 		
-		return !pieceInWay;
+		return !pieceInWay && validMovementPattern;
 	}
 	
 }

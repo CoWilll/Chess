@@ -89,26 +89,45 @@ public abstract class Piece {
 		boolean oldRowIsSmaller = oldCoords.getRow() < newCoords.getRow();
 		boolean oldColumnIsSmaller = oldCoords.getColumn() < newCoords.getColumn();
 		boolean oldCoordsIsSmaller = oldRowIsSmaller && oldColumnIsSmaller;
-		int i,j;
+		int newFinalRowPosition = newCoords.getRow();
+		int currentRow = oldCoords.getRow();
+		int currentColumn = oldCoords.getColumn();
+		
+		//Modify current rows and columns by +1/-1 to avoid checking itself.
+		currentRow = oldCoordsIsSmaller ? currentRow + 1 : currentRow - 1;
+		currentColumn = oldCoordsIsSmaller ? currentColumn + 1: currentColumn - 1;
+		
+		if (lastSpotInclusive)
+			newFinalRowPosition = oldColumnIsSmaller ? newFinalRowPosition + 1 : newFinalRowPosition - 1;
 		
 		//Going left to right - Increasing i and j each time
 		// if the old coords are both smaller than the new coords.
 		if (oldCoordsIsSmaller) {
-			//Starting i and j will be old coords of x and y.
-			i = 0;
-			j = 0;
-			for (;i < 5;) {
+			
+			//Iterate number of squares from old to new Coords.
+			for (int i = oldCoords.getRow(); i < newFinalRowPosition; i++) {
+				Piece pieceToCompare = boardData.getBoard()[currentRow++][currentColumn++];
 				
+				if (pieceToCompare != null) {
+					pieceInWay = true;
+					break;
+				}
 				
-				//Increment to the next spot
-				j++; i++;
 			}
 			
 			
 		//Going right to left - decreasing i and j each time
 		// if the old coords are bigger than the new coords.
 		} else if (!oldColumnIsSmaller) {
-			
+			for (int i = oldCoords.getRow(); i > newFinalRowPosition; i--) {
+				
+				Piece pieceToCompare = boardData.getBoard()[currentRow--][currentColumn--];
+				
+				if (pieceToCompare != null) {
+					pieceInWay = true;
+					break;
+				}
+			}
 		}
 		
 		
@@ -133,7 +152,7 @@ public abstract class Piece {
 		oldRow = newRowBelowOldRow ? oldRow + 1 : oldRow - 1;
 		
 		if (lastSpotInclusive)
-			newRow++;
+			newRow = newRowBelowOldRow ? newRow + 1 : newRow - 1;
 		
 		
 		if (newRowBelowOldRow) {
@@ -175,9 +194,9 @@ public abstract class Piece {
 		
 		//Modify xCoordOld by +1/-1 to avoid checking itself.
 		oldColumn = newColumnRightOfOldColumn ? oldColumn + 1 : oldColumn - 1;
-		
-		//If last spot is to be included increase the new y coord by one.
-		if (lastSpotInclusive) newColumn++;
+		//Adjust columns to include last spot of needed.
+		if (lastSpotInclusive)
+			newColumn = newColumnRightOfOldColumn ? newColumn + 1 : newColumn - 1;
 		
 		if (newColumnRightOfOldColumn) {
 			for (int i = oldColumn; i < newColumn; i++) {

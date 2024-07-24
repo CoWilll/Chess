@@ -39,7 +39,6 @@ public class Main {
 					data.getBoard()[newX][newY] = data.getBoard()[oldX][oldY];
 					//Nulify the old spot
 					data.getBoard()[oldX][oldY] = null;
-					
 					//Update the back-end data for piece.
 					data.getBoard()[newX][newY].updateMove(new Point(newX,newY));
 				}
