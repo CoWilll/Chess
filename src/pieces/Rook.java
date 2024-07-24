@@ -1,9 +1,7 @@
 package pieces;
 
 import java.awt.Color;
-import java.awt.Point;
-
-import backend.Data;
+import backend.*;
 
 /**
  * Class represents a piece in chess that can move any number of squares
@@ -44,16 +42,16 @@ public class Rook extends Piece {
 	public boolean validateMovementPattern(Point newLocation) {
 		
 		boolean pieceInWay = false;
-		boolean sameX = newLocation.x == oldLocation.x;
-		boolean sameY = newLocation.y == oldLocation.y;
+		boolean sameRow = newLocation.getRow() == oldLocation.getRow();
+		boolean sameColumn = newLocation.getColumn() == oldLocation.getColumn();
 		
 		//Moving Horizontally
-		if (sameX && !sameY) {
-			pieceInWay = pieceInWayHorizontal(oldLocation.y,newLocation.y, false);
+		if (sameRow && !sameColumn) {
+			pieceInWay = pieceInWayHorizontal(oldLocation.getColumn(),newLocation.getColumn(), false);
 			
 		//Moving Vertically
-		} else if (!sameX && sameY) {
-			pieceInWay = pieceInWayVertical(oldLocation.x, newLocation.x, false);
+		} else if (!sameRow && sameColumn) {
+			pieceInWay = pieceInWayVertical(oldLocation.getRow(), newLocation.getRow(), false);
 		}
 		
 		return !pieceInWay;

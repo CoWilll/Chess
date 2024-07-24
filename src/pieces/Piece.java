@@ -1,9 +1,7 @@
 package pieces;
 
 import java.awt.Color;
-import java.awt.Point;
-
-import backend.Data;
+import backend.*;
 
 /**
  * Abstract class that will represent a piece and serve as a superclass to all
@@ -73,6 +71,49 @@ public abstract class Piece {
 	public Color getColor() {
 		return color;
 	}
+	
+	/**
+	 * Method will check if there is a piece in the way diagonally for a decreasing
+	 * diagonal line, so the end checked spots would create a line the goes down as 
+	 * you move from left to right.
+	 * 
+	 * Methods assumes that old and new points are NOT the same spot.
+	 * 
+	 * @param oldCoords
+	 * @param newCoords
+	 * @param lastSpotInclusive
+	 * @return If there is a piece in the way.
+	 */
+	protected boolean pieceInWayDiagonallyDecreasing(Point oldCoords, Point newCoords, boolean lastSpotInclusive) {
+		boolean pieceInWay = false;
+		boolean oldRowIsSmaller = oldCoords.getRow() < newCoords.getRow();
+		boolean oldColumnIsSmaller = oldCoords.getColumn() < newCoords.getColumn();
+		boolean oldCoordsIsSmaller = oldRowIsSmaller && oldColumnIsSmaller;
+		int i,j;
+		
+		//Going left to right - Increasing i and j each time
+		// if the old coords are both smaller than the new coords.
+		if (oldCoordsIsSmaller) {
+			//Starting i and j will be old coords of x and y.
+			i = 0;
+			j = 0;
+			for (;i < 5;) {
+				
+				
+				//Increment to the next spot
+				j++; i++;
+			}
+			
+			
+		//Going right to left - decreasing i and j each time
+		// if the old coords are bigger than the new coords.
+		} else if (!oldColumnIsSmaller) {
+			
+		}
+		
+		
+		return pieceInWay;
+	}
 
 	/**
 	 * Methods will determine if there is a piece in the way vertically.
@@ -83,22 +124,22 @@ public abstract class Piece {
 	 * 
 	 * @return True is there is a piece in the way vertically.
 	 */
-	protected boolean pieceInWayVertical(int xCoordOld, int xCoordNew, boolean lastSpotInclusive) {
+	protected boolean pieceInWayVertical(int oldRow, int newRow, boolean lastSpotInclusive) {
 
-		boolean newXBelowOriginal = xCoordNew > xCoordOld;
+		boolean newRowBelowOldRow = newRow > oldRow;
 		boolean pieceInWay = false;
 		
 		//Modify xCoordOld by +1/-1 to avoid checking itself.
-		xCoordOld = newXBelowOriginal ? xCoordOld + 1 : xCoordOld - 1;
+		oldRow = newRowBelowOldRow ? oldRow + 1 : oldRow - 1;
 		
 		if (lastSpotInclusive)
-			xCoordNew++;
+			newRow++;
 		
 		
-		if (newXBelowOriginal) {
-			for (int i = xCoordOld; i < xCoordNew; i++) {
+		if (newRowBelowOldRow) {
+			for (int i = oldRow; i < newRow; i++) {
 				
-				Piece pieceToCompare = boardData.getBoard()[i][oldLocation.y];
+				Piece pieceToCompare = boardData.getBoard()[i][oldLocation.getColumn()];
 				
 				if (pieceToCompare != null) {
 					pieceInWay = true;
@@ -106,9 +147,9 @@ public abstract class Piece {
 				}
 			}
 		} else {
-			for (int i = xCoordOld; i > xCoordNew; i--) {
+			for (int i = oldRow; i > newRow; i--) {
 				
-				Piece pieceToCompare = boardData.getBoard()[i][oldLocation.y];
+				Piece pieceToCompare = boardData.getBoard()[i][oldLocation.getColumn()];
 				
 				if (pieceToCompare != null) {
 					pieceInWay = true;
@@ -122,26 +163,26 @@ public abstract class Piece {
 
 	/**
 	 * 
-	 * @param yCoordOld
-	 * @param yCoordNew
+	 * @param oldColumn
+	 * @param newColumn
 	 * @param lastSpotInclusive
 	 * @return
 	 */
-	protected boolean pieceInWayHorizontal(int yCoordOld, int yCoordNew, boolean lastSpotInclusive) {
+	protected boolean pieceInWayHorizontal(int oldColumn, int newColumn, boolean lastSpotInclusive) {
 
-		boolean newYRightOfOriginal = yCoordNew > yCoordOld;
+		boolean newColumnRightOfOldColumn = newColumn > oldColumn;
 		boolean pieceInWay = false;
 		
 		//Modify xCoordOld by +1/-1 to avoid checking itself.
-		yCoordOld = newYRightOfOriginal ? yCoordOld + 1 : yCoordOld - 1;
+		oldColumn = newColumnRightOfOldColumn ? oldColumn + 1 : oldColumn - 1;
 		
 		//If last spot is to be included increase the new y coord by one.
-		if (lastSpotInclusive) yCoordNew++;
+		if (lastSpotInclusive) newColumn++;
 		
-		if (newYRightOfOriginal) {
-			for (int i = yCoordOld; i < yCoordNew; i++) {
+		if (newColumnRightOfOldColumn) {
+			for (int i = oldColumn; i < newColumn; i++) {
 				
-				Piece pieceToCompare = boardData.getBoard()[oldLocation.x][i];
+				Piece pieceToCompare = boardData.getBoard()[oldLocation.getRow()][i];
 				
 				if (pieceToCompare != null) {
 					pieceInWay = true;
@@ -149,9 +190,9 @@ public abstract class Piece {
 				}
 			}
 		} else {
-			for (int i = yCoordOld; i > yCoordNew; i--) {
+			for (int i = oldColumn; i > newColumn; i--) {
 				
-				Piece pieceToCompare = boardData.getBoard()[oldLocation.x][i];
+				Piece pieceToCompare = boardData.getBoard()[oldLocation.getRow()][i];
 				
 				if (pieceToCompare != null) {
 					pieceInWay = true;

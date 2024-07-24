@@ -1,9 +1,7 @@
 package pieces;
 
 import java.awt.Color;
-import java.awt.Point;
-
-import backend.Data;
+import backend.*;
 
 public class Knight extends Piece {
 

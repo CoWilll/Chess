@@ -1,8 +1,6 @@
 package main;
 
-import java.awt.Point;
-
-import backend.Data;
+import backend.*;
 import io.BoardConsole;
 import io.IO;
 
@@ -26,12 +24,12 @@ public class Main {
 		while (true) {
 			BoardConsole.printBoard(data);
 			System.out.println("Please enter spot to move.");
-			int oldX = IO.getInt("Please enter x:");
-			int oldY = IO.getInt("Please enter y:");
+			int oldX = IO.getInt("Please enter row:");
+			int oldY = IO.getInt("Please enter col:");
 
 			System.out.println("Please enter your new spot.");
-			int newX = IO.getInt("Please enter x:");
-			int newY = IO.getInt("Please enter y:");
+			int newX = IO.getInt("Please enter row:");
+			int newY = IO.getInt("Please enter col:");
 
 			if (data.getBoard()[oldX][oldY] != null) {
 				boolean valid = data.getBoard()[oldX][oldY].validateMovementPattern(new Point(newX, newY));
